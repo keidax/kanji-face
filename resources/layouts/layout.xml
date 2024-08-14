@@ -1,0 +1,21 @@
+<layout id="WatchFace">
+    <drawable class="Background" />
+    <label id="TimeLabel"
+           x="center"
+           y="0"
+           font="Graphics.FONT_NUMBER_MEDIUM"
+           justification="Graphics.TEXT_JUSTIFY_CENTER"
+           color="Graphics.COLOR_GREEN" />
+    <label id="TextLabel1"
+           x="center"
+           y="100"
+           font="Graphics.FONT_LARGE"
+           justification="Graphics.TEXT_JUSTIFY_CENTER"
+           color="Graphics.COLOR_GREEN" />
+    <label id="TextLabel2"
+           x="center"
+           y="150"
+           font="Graphics.FONT_SYSTEM_LARGE"
+           justification="Graphics.TEXT_JUSTIFY_CENTER"
+           color="Graphics.COLOR_BLUE" />
+</layout>
