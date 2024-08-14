@@ -44,11 +44,14 @@ class kanji_faceView extends WatchUi.WatchFace {
         view.setColor(getApp().getProperty("ForegroundColor") as Number);
         view.setText(timeString);
 
-        var text1 = View.findDrawableById("TextLabel1") as Text;
-        text1.setText("hello world");
+        // var text1 = View.findDrawableById("TextLabel1") as Text;
+        // text1.setText("hello world");
+
+        var font_cjk = WatchUi.loadResource(Rez.Fonts.NotoCJK);
 
         var text2 = View.findDrawableById("TextLabel2") as Text;
-        text2.setText("あア彼");
+        text2.setText("桐生 一馬");
+        text2.setFont(font_cjk);
         // text2.setText("hello world");
 
         // Call the parent onUpdate function to redraw the layout
