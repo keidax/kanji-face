@@ -1,5 +1,5 @@
 <layout id="WatchFace">
-    <drawable class="Background" />
+    <!-- <drawable class="Background" /> -->
     <label id="TimeLabel"
            x="center"
            y="20"
@@ -7,14 +7,14 @@
            justification="Graphics.TEXT_JUSTIFY_CENTER"
            color="Graphics.COLOR_GREEN" />
     <label id="TextLabel1"
-           x="center"
-           y="90"
+           x="46"
+           y="150"
            font="Graphics.FONT_LARGE"
            justification="Graphics.TEXT_JUSTIFY_CENTER"
            color="Graphics.COLOR_GREEN" />
-    <label id="TextLabel2"
+    <label id="KanjiLabel"
            x="center"
-           y="center"
+           y="bottom"
            font="Graphics.FONT_SYSTEM_LARGE"
            justification="Graphics.TEXT_JUSTIFY_CENTER"
            color="Graphics.COLOR_PURPLE" />

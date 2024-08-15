@@ -29,7 +29,7 @@
   }, {
     "key" : "ForegroundColor",
     "valueType" : "number",
-    "defaultValue" : 16711680,
+    "defaultValue" : 16777215,
     "configTitle" : "ForegroundColorTitle",
     "configPrompt" : null,
     "configType" : "list",
