@@ -5,15 +5,37 @@ import Toybox.System;
 import Toybox.WatchUi;
 import Toybox.ActivityMonitor;
 
+using Toybox.Math;
+using Toybox.Time;
+using Toybox.Time.Gregorian;
+using Toybox.StringUtil;
+
 class kanji_faceView extends WatchUi.WatchFace {
+
+    private var kanjiFont as FontResource?;
 
     function initialize() {
         WatchFace.initialize();
+        kanjiFont = null;
     }
 
     // Load your resources here
     function onLayout(dc as Dc) as Void {
+        var myStats = System.getSystemStats();
+        // System.println(myStats.usedMemory);
+        System.println(myStats.freeMemory);
+
         setLayout(Rez.Layouts.WatchFace(dc));
+        // System.println(myStats.freeMemory);
+        kanjiFont = WatchUi.loadResource(Rez.Fonts.Kanji31);
+
+        // System.println(myStats.freeMemory);
+
+        System.println(KanjiLoader.FONTS.size());
+
+        myStats = System.getSystemStats();
+        // System.println(myStats.usedMemory);
+        System.println(myStats.freeMemory);
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -24,6 +46,11 @@ class kanji_faceView extends WatchUi.WatchFace {
 
     // Update the view
     function onUpdate(dc as Dc) as Void {
+        var today = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
+        var date = View.findDrawableById("DateLabel") as Text;
+        var dateString = Lang.format("$1$ $2$", [today.day_of_week, today.day]); 
+        date.setText(dateString);
+
         // Get the current time and format it correctly
         var timeFormat = "$1$:$2$";
         var clockTime = System.getClockTime();
@@ -50,20 +77,19 @@ class kanji_faceView extends WatchUi.WatchFace {
         var text1 = View.findDrawableById("TextLabel1") as Text;
         text1.setText(moveBar.toString());
 
-        var font_cjk = WatchUi.loadResource(Rez.Fonts.NotoCJK);
-
+        var codepoint = 2041;
+        
+        var char = codepoint.toChar().toString();
         var kanjiText = View.findDrawableById("KanjiLabel") as Text;
-        kanjiText.setText("馬");
-        kanjiText.setFont(font_cjk);
-        // text2.setText("hello world");
-
+        kanjiText.setText(char);
+        
+        kanjiText.setFont(kanjiFont);
 
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
 
-
-        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_GREEN);
-        dc.drawRoundedRectangle(64, 140, 80, 100, 5);
+        dc.setColor(Graphics.COLOR_PURPLE, Graphics.COLOR_BLACK);
+        dc.drawRoundedRectangle(66, 136, 76, 100, 6);
     }
 
     // Called when this View is removed from the screen. Save the

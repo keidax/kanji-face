@@ -1,3 +1,36 @@
 <resources>
-    <font id="NotoCJK" filename="fonts/noto-cjk.fnt"/>
+  <font id="Kanji0" filename="fonts/kanji-0.fnt" />
+  <font id="Kanji1" filename="fonts/kanji-1.fnt" />
+  <font id="Kanji2" filename="fonts/kanji-2.fnt" />
+  <font id="Kanji3" filename="fonts/kanji-3.fnt" />
+  <font id="Kanji4" filename="fonts/kanji-4.fnt" />
+  <font id="Kanji5" filename="fonts/kanji-5.fnt" />
+  <font id="Kanji6" filename="fonts/kanji-6.fnt" />
+  <font id="Kanji7" filename="fonts/kanji-7.fnt" />
+  <font id="Kanji8" filename="fonts/kanji-8.fnt" />
+  <font id="Kanji9" filename="fonts/kanji-9.fnt" />
+  <font id="Kanji10" filename="fonts/kanji-10.fnt" />
+  <font id="Kanji11" filename="fonts/kanji-11.fnt" />
+  <font id="Kanji12" filename="fonts/kanji-12.fnt" />
+  <font id="Kanji13" filename="fonts/kanji-13.fnt" />
+  <font id="Kanji14" filename="fonts/kanji-14.fnt" />
+  <font id="Kanji15" filename="fonts/kanji-15.fnt" />
+  <font id="Kanji16" filename="fonts/kanji-16.fnt" />
+  <font id="Kanji17" filename="fonts/kanji-17.fnt" />
+  <font id="Kanji18" filename="fonts/kanji-18.fnt" />
+  <font id="Kanji19" filename="fonts/kanji-19.fnt" />
+  <font id="Kanji20" filename="fonts/kanji-20.fnt" />
+  <font id="Kanji21" filename="fonts/kanji-21.fnt" />
+  <font id="Kanji22" filename="fonts/kanji-22.fnt" />
+  <font id="Kanji23" filename="fonts/kanji-23.fnt" />
+  <font id="Kanji24" filename="fonts/kanji-24.fnt" />
+  <font id="Kanji25" filename="fonts/kanji-25.fnt" />
+  <font id="Kanji26" filename="fonts/kanji-26.fnt" />
+  <font id="Kanji27" filename="fonts/kanji-27.fnt" />
+  <font id="Kanji28" filename="fonts/kanji-28.fnt" />
+  <font id="Kanji29" filename="fonts/kanji-29.fnt" />
+  <font id="Kanji30" filename="fonts/kanji-30.fnt" />
+  <font id="Kanji31" filename="fonts/kanji-31.fnt" />
+  <font id="Kanji32" filename="fonts/kanji-32.fnt" />
+  <font id="Kanji33" filename="fonts/kanji-33.fnt" />
 </resources>

@@ -1,21 +1,30 @@
 <layout id="WatchFace">
     <!-- <drawable class="Background" /> -->
+    <label id="DateLabel"
+           x="center"
+           y="3"
+           font="Graphics.FONT_SYSTEM_LARGE"
+           justification="Graphics.TEXT_JUSTIFY_CENTER"
+           color="Graphics.COLOR_GREEN" />
+
     <label id="TimeLabel"
            x="center"
            y="20"
            font="Graphics.FONT_NUMBER_MEDIUM"
            justification="Graphics.TEXT_JUSTIFY_CENTER"
-           color="Graphics.COLOR_GREEN" />
+           color="Graphics.COLOR_WHITE" />
+
     <label id="TextLabel1"
            x="46"
            y="150"
            font="Graphics.FONT_LARGE"
            justification="Graphics.TEXT_JUSTIFY_CENTER"
-           color="Graphics.COLOR_GREEN" />
+           color="Graphics.COLOR_RED" />
+
     <label id="KanjiLabel"
            x="center"
            y="bottom"
            font="Graphics.FONT_SYSTEM_LARGE"
            justification="Graphics.TEXT_JUSTIFY_CENTER"
-           color="Graphics.COLOR_PURPLE" />
+           color="Graphics.COLOR_WHITE" />
 </layout>
