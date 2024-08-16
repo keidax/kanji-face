@@ -12,30 +12,16 @@ using Toybox.StringUtil;
 
 class kanji_faceView extends WatchUi.WatchFace {
 
-    private var kanjiFont as FontResource?;
+    private var kanjiLoader as KanjiLoader;
 
     function initialize() {
         WatchFace.initialize();
-        kanjiFont = null;
+        kanjiLoader = new KanjiLoader();
     }
 
     // Load your resources here
     function onLayout(dc as Dc) as Void {
-        var myStats = System.getSystemStats();
-        // System.println(myStats.usedMemory);
-        System.println(myStats.freeMemory);
-
         setLayout(Rez.Layouts.WatchFace(dc));
-        // System.println(myStats.freeMemory);
-        kanjiFont = WatchUi.loadResource(Rez.Fonts.Kanji31);
-
-        // System.println(myStats.freeMemory);
-
-        System.println(KanjiLoader.FONTS.size());
-
-        myStats = System.getSystemStats();
-        // System.println(myStats.usedMemory);
-        System.println(myStats.freeMemory);
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -77,13 +63,15 @@ class kanji_faceView extends WatchUi.WatchFace {
         var text1 = View.findDrawableById("TextLabel1") as Text;
         text1.setText(moveBar.toString());
 
-        var codepoint = 2041;
-        
-        var char = codepoint.toChar().toString();
         var kanjiText = View.findDrawableById("KanjiLabel") as Text;
+        // release reference to previous font
+        kanjiText.setFont(Graphics.FONT_SYSTEM_LARGE);
+
+        var kanjiRef = kanjiLoader.loadNextKanji();
+        var codepoint = kanjiRef[0];
+        var char = codepoint.toChar().toString();
         kanjiText.setText(char);
-        
-        kanjiText.setFont(kanjiFont);
+        kanjiText.setFont(kanjiRef[1]);
 
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
