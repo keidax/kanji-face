@@ -14,7 +14,7 @@
            justification="Graphics.TEXT_JUSTIFY_CENTER"
            color="Graphics.COLOR_WHITE" />
 
-    <label id="TextLabel1"
+    <label id="MoveLabel"
            x="46"
            y="150"
            font="Graphics.FONT_LARGE"
@@ -25,6 +25,13 @@
            x="center"
            y="bottom"
            font="Graphics.FONT_SYSTEM_LARGE"
+           justification="Graphics.TEXT_JUSTIFY_CENTER"
+           color="Graphics.COLOR_WHITE" />
+
+    <label id="KanjiChar"
+           x="center"
+           y="100"
+           font="Graphics.FONT_SYSTEM_MEDIUM"
            justification="Graphics.TEXT_JUSTIFY_CENTER"
            color="Graphics.COLOR_WHITE" />
 </layout>

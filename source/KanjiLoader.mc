@@ -1,9 +1,10 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
-
-using Toybox.Math;
+import Toybox.Math;
 
 class KanjiLoader{
+    // The first codepoint in our custom encoding
+    static const ENCODING_START = 19968;
     // The total number of kanji encoded into custom fonts
     static const KANJI_MAX = 2136;
     // How many kanji each font resource can contain
@@ -46,29 +47,15 @@ class KanjiLoader{
         Rez.Fonts.Kanji33
     ];
 
-    static const SPECIAL_CHARS = [
-        8, 9, 32, 160, 64, 127, 1, 2136
-    ];
-
-    private var char_i;
-
-    function initialize() {
-        char_i = 0;
-    }
-
     function getRandomKanji() as Number {
-        var kanjiNumber = (Math.rand() % KANJI_MAX) + 1;
+        var kanjiNumber = (Math.rand() % KANJI_MAX) + ENCODING_START;
         return kanjiNumber;
     }
 
     function loadNextKanji() as [Number, FontResource] {
-        // var kanji = getRandomKanji();
+        var kanji = getRandomKanji();
 
-        var kanji = SPECIAL_CHARS[char_i];
-        char_i++;
-        char_i %= SPECIAL_CHARS.size();
-
-        var resourceIndex = (kanji-1) / CHUNK_SIZE;
+        var resourceIndex = (kanji - ENCODING_START) / CHUNK_SIZE;
         var font = WatchUi.loadResource(FONTS[resourceIndex]);
 
         return [kanji, font];

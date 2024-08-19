@@ -60,7 +60,7 @@ class kanji_faceView extends WatchUi.WatchFace {
 
         var activityInfo = ActivityMonitor.getInfo();
         var moveBar = activityInfo.moveBarLevel;
-        var text1 = View.findDrawableById("TextLabel1") as Text;
+        var text1 = View.findDrawableById("MoveLabel") as Text;
         text1.setText(moveBar.toString());
 
         var kanjiText = View.findDrawableById("KanjiLabel") as Text;
@@ -72,6 +72,9 @@ class kanji_faceView extends WatchUi.WatchFace {
         var char = codepoint.toChar().toString();
         kanjiText.setText(char);
         kanjiText.setFont(kanjiRef[1]);
+
+        var kanjiCharText = View.findDrawableById("KanjiChar") as Text;
+        kanjiCharText.setText(codepoint.toString());
 
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
