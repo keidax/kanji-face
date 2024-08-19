@@ -22,7 +22,7 @@
            color="Graphics.COLOR_RED" />
 
     <label id="SecondLabel"
-           x="167"
+           x="163"
            y="150"
            font="Graphics.FONT_LARGE"
            justification="Graphics.TEXT_JUSTIFY_CENTER"
@@ -37,7 +37,7 @@
 
     <label id="StatusLabel"
            x="center"
-           y="100"
+           y="92"
            font="Graphics.FONT_SYSTEM_LARGE"
            justification="Graphics.TEXT_JUSTIFY_CENTER"
            color="Graphics.COLOR_WHITE" />

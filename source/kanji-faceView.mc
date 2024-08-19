@@ -86,21 +86,7 @@ class kanji_faceView extends WatchUi.WatchFace {
         secondLabel.setText(seconds.format("%02d"));
 
         var statusLabel = View.findDrawableById("StatusLabel") as Text;
-        var statusText = "";
-
-        var settings = System.getDeviceSettings();
-        if (settings.alarmCount > 0) {
-            statusText += "A";
-        }
-        if (settings.phoneConnected) {
-            statusText += "P";
-        }
-        if (isSleeping) {
-            statusText += "S";
-        }
-        if (mySleepMode()) {
-            statusText += "Z";
-        }
+        var statusText = getStatusText();
         statusLabel.setText(statusText);
 
         if (seconds == 0 || now.compare(lastKanjiDisplay) > 15) {
@@ -120,7 +106,8 @@ class kanji_faceView extends WatchUi.WatchFace {
         View.onUpdate(dc);
 
         dc.setColor(Graphics.COLOR_PURPLE, Graphics.COLOR_BLACK);
-        dc.drawRoundedRectangle(66, 136, 76, 100, 6);
+        dc.setPenWidth(2);
+        dc.drawRoundedRectangle(66, 136, 76, 100, 7);
     }
 
     // Called when this View is removed from the screen. Save the
@@ -139,8 +126,30 @@ class kanji_faceView extends WatchUi.WatchFace {
         isSleeping = true;
     }
 
-    // Based on
-    // https://forums.garmin.com/developer/connect-iq/f/discussion/2416/do-not-disturb
+    // Get some status information in a condensed form
+    function getStatusText() as String {
+        var statusText = "";
+
+        var settings = System.getDeviceSettings();
+        if (settings.alarmCount > 0) {
+            statusText += "A";
+        }
+        if (settings.phoneConnected) {
+            statusText += "P";
+        }
+        if (isSleeping) {
+            statusText += "S";
+        }
+        if (mySleepMode()) {
+            statusText += "Z";
+        }
+
+        return statusText;
+    }
+
+    // Based on https://forums.garmin.com/developer/connect-iq/f/discussion/2416/do-not-disturb
+    // We don't have access to the Do Not Disturb state, so we assume the user's configured
+    // sleep/wake times are equivalent.
     function mySleepMode()
     {
         var sleepMode = false;
