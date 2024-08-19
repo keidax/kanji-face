@@ -1,4 +1,5 @@
 <resources>
+  <font id="Status" filename="fonts/status.fnt" />
   <font id="Kanji0" filename="fonts/kanji-0.fnt" />
   <font id="Kanji1" filename="fonts/kanji-1.fnt" />
   <font id="Kanji2" filename="fonts/kanji-2.fnt" />

@@ -9,21 +9,21 @@
 
     <label id="TimeLabel"
            x="center"
-           y="20"
+           y="25"
            font="Graphics.FONT_NUMBER_MEDIUM"
            justification="Graphics.TEXT_JUSTIFY_CENTER"
            color="Graphics.COLOR_WHITE" />
 
     <label id="MoveLabel"
-           x="46"
-           y="150"
+           x="48"
+           y="145"
            font="Graphics.FONT_LARGE"
            justification="Graphics.TEXT_JUSTIFY_CENTER"
            color="Graphics.COLOR_RED" />
 
     <label id="SecondLabel"
-           x="163"
-           y="150"
+           x="161"
+           y="149"
            font="Graphics.FONT_LARGE"
            justification="Graphics.TEXT_JUSTIFY_CENTER"
            color="Graphics.COLOR_GREEN" />

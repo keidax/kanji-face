@@ -18,6 +18,7 @@ class kanji_faceView extends WatchUi.WatchFace {
     private var userWakeTime as Number;
     private var userSleepTime as Number;
     private var lastKanjiDisplay as Time.Moment;
+    private var statusFont as FontResource?;
 
     function initialize() {
         WatchFace.initialize();
@@ -31,6 +32,7 @@ class kanji_faceView extends WatchUi.WatchFace {
     // Load your resources here
     function onLayout(dc as Dc) as Void {
         setLayout(Rez.Layouts.WatchFace(dc));
+        statusFont = WatchUi.loadResource(Rez.Fonts.Status);
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -45,10 +47,42 @@ class kanji_faceView extends WatchUi.WatchFace {
     // Update the view
     function onUpdate(dc as Dc) as Void {
         var now = Time.now();
-        var today = Gregorian.info(now, Time.FORMAT_MEDIUM);
         var date = View.findDrawableById("DateLabel") as Text;
-        var dateString = Lang.format("$1$ $2$", [today.day_of_week, today.day]); 
-        date.setText(dateString);
+
+        if (false) {
+            var today = Gregorian.info(now, Time.FORMAT_MEDIUM);
+            var dateString = Lang.format("$1$ $2$", [today.day_of_week, today.day]);
+            date.setText(dateString);
+        } else {
+            date.setFont(statusFont);
+            var today = Gregorian.info(now, Time.FORMAT_SHORT);
+            var dateString = "";
+            switch (today.day_of_week) {
+                case 1:
+                    dateString += "g ";
+                    break;
+                case 2:
+                    dateString += "a ";
+                    break;
+                case 3:
+                    dateString += "b ";
+                    break;
+                case 4:
+                    dateString += "c ";
+                    break;
+                case 5:
+                    dateString += "d ";
+                    break;
+                case 6:
+                    dateString += "e ";
+                    break;
+                case 7:
+                    dateString += "f ";
+                    break;
+            }
+            dateString += japaneseNumerals(today.day);
+            date.setText(dateString);
+        }
 
         // Get the current time and format it correctly
         var timeFormat = "$1$:$2$";
@@ -75,6 +109,12 @@ class kanji_faceView extends WatchUi.WatchFace {
         var moveBar = activityInfo.moveBarLevel;
         var moveLabel = View.findDrawableById("MoveLabel") as Text;
 
+        if (false) {
+            moveLabel.setFont(Graphics.FONT_SYSTEM_LARGE);
+        } else {
+            moveLabel.setFont(statusFont);
+        }
+
         if (moveBar > 0) {
             moveLabel.setText(moveBar.toString());
         } else {
@@ -88,6 +128,11 @@ class kanji_faceView extends WatchUi.WatchFace {
         var statusLabel = View.findDrawableById("StatusLabel") as Text;
         var statusText = getStatusText();
         statusLabel.setText(statusText);
+        if (false) {
+            statusLabel.setFont(Graphics.FONT_SYSTEM_LARGE);
+        } else {
+            statusLabel.setFont(statusFont);
+        }
 
         if (seconds == 0 || now.compare(lastKanjiDisplay) > 15) {
             var kanjiText = View.findDrawableById("KanjiLabel") as Text;
@@ -136,12 +181,14 @@ class kanji_faceView extends WatchUi.WatchFace {
         }
         if (settings.phoneConnected) {
             statusText += "P";
-        }
-        if (isSleeping) {
-            statusText += "S";
+        } else {
+            statusText += "D";
         }
         if (mySleepMode()) {
             statusText += "Z";
+        }
+        if (isSleeping) {
+            statusText += "S";
         }
 
         return statusText;
@@ -168,6 +215,30 @@ class kanji_faceView extends WatchUi.WatchFace {
             }
         }
         return sleepMode;
-    } 
+    }
+
+    function japaneseNumerals(number as Number) as String {
+        if (number <= 0) {
+            return "0";
+        }
+
+        var string = "";
+
+        if (number >= 20) {
+            var tens = number / 10;
+            string += tens.toString();
+        }
+
+        if (number >= 10) {
+            string += "%";
+        }
+
+        var ones = number % 10;
+        if (ones > 0) {
+            string += ones.toString();
+        }
+
+        return string;
+    }
 
 }
