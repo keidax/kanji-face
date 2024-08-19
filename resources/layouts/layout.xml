@@ -21,6 +21,13 @@
            justification="Graphics.TEXT_JUSTIFY_CENTER"
            color="Graphics.COLOR_RED" />
 
+    <label id="SecondLabel"
+           x="167"
+           y="150"
+           font="Graphics.FONT_LARGE"
+           justification="Graphics.TEXT_JUSTIFY_CENTER"
+           color="Graphics.COLOR_GREEN" />
+
     <label id="KanjiLabel"
            x="center"
            y="bottom"

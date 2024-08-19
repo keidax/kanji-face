@@ -13,10 +13,12 @@ using Toybox.StringUtil;
 class kanji_faceView extends WatchUi.WatchFace {
 
     private var kanjiLoader as KanjiLoader;
+    private var lastKanjiDisplay as Time.Moment;
 
     function initialize() {
         WatchFace.initialize();
         kanjiLoader = new KanjiLoader();
+        lastKanjiDisplay = new Time.Moment(0);
     }
 
     // Load your resources here
@@ -32,7 +34,8 @@ class kanji_faceView extends WatchUi.WatchFace {
 
     // Update the view
     function onUpdate(dc as Dc) as Void {
-        var today = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
+        var now = Time.now();
+        var today = Gregorian.info(now, Time.FORMAT_MEDIUM);
         var date = View.findDrawableById("DateLabel") as Text;
         var dateString = Lang.format("$1$ $2$", [today.day_of_week, today.day]); 
         date.setText(dateString);
@@ -60,21 +63,31 @@ class kanji_faceView extends WatchUi.WatchFace {
 
         var activityInfo = ActivityMonitor.getInfo();
         var moveBar = activityInfo.moveBarLevel;
-        var text1 = View.findDrawableById("MoveLabel") as Text;
-        text1.setText(moveBar.toString());
+        var moveLabel = View.findDrawableById("MoveLabel") as Text;
 
-        var kanjiText = View.findDrawableById("KanjiLabel") as Text;
-        // release reference to previous font
-        kanjiText.setFont(Graphics.FONT_SYSTEM_LARGE);
+        if (moveBar > 0) {
+            moveLabel.setText(moveBar.toString());
+        } else {
+            moveLabel.setText("");
+        }
 
-        var kanjiRef = kanjiLoader.loadNextKanji();
-        var codepoint = kanjiRef[0];
-        var char = codepoint.toChar().toString();
-        kanjiText.setText(char);
-        kanjiText.setFont(kanjiRef[1]);
+        var seconds = clockTime.sec;
+        var secondLabel = View.findDrawableById("SecondLabel") as Text;
+        secondLabel.setText(seconds.format("%02d"));
 
-        var kanjiCharText = View.findDrawableById("KanjiChar") as Text;
-        kanjiCharText.setText(codepoint.toString());
+
+        if (seconds == 0 || now.compare(lastKanjiDisplay) > 15) {
+            var kanjiText = View.findDrawableById("KanjiLabel") as Text;
+            // release reference to previous font
+            kanjiText.setFont(Graphics.FONT_SYSTEM_LARGE);
+
+            var kanjiRef = kanjiLoader.loadNextKanji();
+            var codepoint = kanjiRef[0];
+            var char = codepoint.toChar().toString();
+            kanjiText.setText(char);
+            kanjiText.setFont(kanjiRef[1]);
+            lastKanjiDisplay = now;
+        }
 
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
