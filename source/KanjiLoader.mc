@@ -47,6 +47,19 @@ class KanjiLoader{
         Rez.Fonts.Kanji33
     ];
 
+    private var mostRecentKanji as Array<Number>;
+    private var recentCount as Number;
+
+    function initialize() {
+        mostRecentKanji = [];
+
+        // Decide how many recent kanji to keep track of
+        recentCount = KANJI_MAX - 1;
+        if (recentCount > 5) {
+            recentCount = 5;
+        }
+    }
+
     function getRandomKanji() as Number {
         var kanjiNumber = (Math.rand() % KANJI_MAX) + ENCODING_START;
         return kanjiNumber;
@@ -54,6 +67,14 @@ class KanjiLoader{
 
     function loadNextKanji() as [Number, FontResource] {
         var kanji = getRandomKanji();
+
+        while (mostRecentKanji.indexOf(kanji) > -1) {
+            kanji = getRandomKanji();
+        }
+        mostRecentKanji.add(kanji);
+        while (mostRecentKanji.size() > recentCount) {
+            mostRecentKanji.remove(mostRecentKanji[0]);
+        }
 
         var resourceIndex = (kanji - ENCODING_START) / CHUNK_SIZE;
         var font = WatchUi.loadResource(FONTS[resourceIndex]);
