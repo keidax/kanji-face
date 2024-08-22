@@ -11,7 +11,7 @@ using Toybox.Time;
 using Toybox.Time.Gregorian;
 using Toybox.StringUtil;
 
-class kanji_faceView extends WatchUi.WatchFace {
+class KanjiFaceView extends WatchUi.WatchFace {
 
     private var kanjiLoader as KanjiLoader;
     private var isSleeping as Boolean;

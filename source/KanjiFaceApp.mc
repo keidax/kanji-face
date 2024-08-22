@@ -2,7 +2,7 @@ import Toybox.Application;
 import Toybox.Lang;
 import Toybox.WatchUi;
 
-class kanji_faceApp extends Application.AppBase {
+class KanjiFaceApp extends Application.AppBase {
 
     function initialize() {
         AppBase.initialize();
@@ -18,7 +18,7 @@ class kanji_faceApp extends Application.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() as [Views] or [Views, InputDelegates] {
-        return [ new kanji_faceView() ];
+        return [ new KanjiFaceView() ];
     }
 
     // New app settings have been received so trigger a UI update
@@ -28,6 +28,6 @@ class kanji_faceApp extends Application.AppBase {
 
 }
 
-function getApp() as kanji_faceApp {
-    return Application.getApp() as kanji_faceApp;
+function getApp() as KanjiFaceApp {
+    return Application.getApp() as KanjiFaceApp;
 }
