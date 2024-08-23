@@ -122,8 +122,10 @@ class KanjiFaceView extends WatchUi.WatchFace {
         }
 
         var seconds = clockTime.sec;
-        var secondLabel = View.findDrawableById("SecondLabel") as Text;
-        secondLabel.setText(seconds.format("%02d"));
+        var batteryLabel = View.findDrawableById("BatteryLabel") as Text;
+        var stats = System.getSystemStats();
+        var batteryPercent = stats.battery.format("%2.0f");
+        batteryLabel.setText(batteryPercent);
 
         var statusLabel = View.findDrawableById("StatusLabel") as Text;
         var statusText = getStatusText();
@@ -133,6 +135,9 @@ class KanjiFaceView extends WatchUi.WatchFace {
         } else {
             statusLabel.setFont(statusFont);
         }
+
+        var stepsLabel = View.findDrawableById("StepsLabel") as Text;
+        stepsLabel.setText(activityInfo.steps.toString());
 
         if (seconds == 0 || now.compare(lastKanjiDisplay) > 15) {
             var kanjiText = View.findDrawableById("KanjiLabel") as Text;
@@ -184,7 +189,7 @@ class KanjiFaceView extends WatchUi.WatchFace {
         } else {
             statusText += "D";
         }
-        if (mySleepMode()) {
+        if (isSleepMode()) {
             statusText += "Z";
         }
         if (isSleeping) {
@@ -197,8 +202,7 @@ class KanjiFaceView extends WatchUi.WatchFace {
     // Based on https://forums.garmin.com/developer/connect-iq/f/discussion/2416/do-not-disturb
     // We don't have access to the Do Not Disturb state, so we assume the user's configured
     // sleep/wake times are equivalent.
-    function mySleepMode()
-    {
+    function isSleepMode() {
         var sleepMode = false;
         if (userWakeTime == userSleepTime) {
             return sleepMode;
