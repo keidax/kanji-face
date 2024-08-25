@@ -2,7 +2,7 @@
 
 # frozen_string_literal: true
 
-font_size = 48
+font_size = 60
 font_file = '/usr/share/fonts/noto-cjk/NotoSerifCJK-Light.ttc'
 
 CHUNK_SIZE = 64
