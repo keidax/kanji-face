@@ -139,6 +139,17 @@ class KanjiFaceView extends WatchUi.WatchFace {
         var stepsLabel = View.findDrawableById("StepsLabel") as Text;
         stepsLabel.setText(activityInfo.steps.toString());
 
+        var hrLabel = View.findDrawableById("HeartRateLabel") as Text;
+
+        var hrIterator = ActivityMonitor.getHeartRateHistory(1, true);
+        var hrSample = hrIterator.next();
+
+        if (hrSample == null || hrSample.heartRate == ActivityMonitor.INVALID_HR_SAMPLE) {
+            hrLabel.setText("Ø");
+        } else {
+            hrLabel.setText(hrSample.heartRate.toString());
+        }
+
         if (seconds == 0 || now.compare(lastKanjiDisplay) > 15) {
             var kanjiText = View.findDrawableById("KanjiLabel") as Text;
             // release reference to previous font

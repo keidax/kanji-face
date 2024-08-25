@@ -48,4 +48,11 @@
            font="Graphics.FONT_SYSTEM_MEDIUM"
            justification="Graphics.TEXT_JUSTIFY_LEFT"
            color="Graphics.COLOR_BLUE" />
+
+    <label id="HeartRateLabel"
+           x="61"
+           y="125"
+           font="Graphics.FONT_SYSTEM_MEDIUM"
+           justification="Graphics.TEXT_JUSTIFY_RIGHT"
+           color="Graphics.COLOR_RED" />
 </layout>
