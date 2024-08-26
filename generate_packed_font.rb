@@ -33,10 +33,19 @@ kanji.each_slice(CHUNK_SIZE).with_index do |chunk, i|
     --chars #{char_range}"
   system(cmd, exception: true)
 
-  sed_id_replacements = char_ids.map.with_index { |id, j| "s/id=#{id} /id=#{base_id + j} /" }.join(';')
+  # Use sed to translate the original Unicode ids into the packed encoding. This must be
+  # done in 2 stages, to ensure ids don't get translated twice.
+  sed_id_surround_cmds = char_ids.map { |id| "s/id=#{id} /id=X#{id}X /" }.join(';')
+  sed_id_translate_cmds = char_ids.map.with_index { |id, j| "s/id=X#{id}X /id=#{base_id + j} /" }.join(';')
 
-  sed_cmd = "sed -i '#{sed_id_replacements}' resources/fonts/#{output}.fnt"
-  system(sed_cmd, exception: true)
+  system(
+    "sed -i '#{sed_id_surround_cmds}' resources/fonts/#{output}.fnt",
+    exception: true
+  )
+  system(
+    "sed -i '#{sed_id_translate_cmds}' resources/fonts/#{output}.fnt",
+    exception: true
+  )
 
   puts %(<font id="Kanji#{i}" filename="fonts/#{output}.fnt" />)
 
