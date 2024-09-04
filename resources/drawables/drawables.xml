@@ -1,3 +1,8 @@
 <drawables>
     <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+    <bitmap id="Battery20" filename="electric-20.png" />
+    <bitmap id="Battery40" filename="electric-40.png" />
+    <bitmap id="Battery60" filename="electric-60.png" />
+    <bitmap id="Battery80" filename="electric-80.png" />
+    <bitmap id="Battery100" filename="electric-100.png" />
 </drawables>

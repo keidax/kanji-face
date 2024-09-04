@@ -121,12 +121,6 @@ class KanjiFaceView extends WatchUi.WatchFace {
             moveLabel.setText("");
         }
 
-        var seconds = clockTime.sec;
-        var batteryLabel = View.findDrawableById("BatteryLabel") as Text;
-        var stats = System.getSystemStats();
-        var batteryPercent = stats.battery.format("%2.0f");
-        batteryLabel.setText(batteryPercent);
-
         var statusLabel = View.findDrawableById("StatusLabel") as Text;
         var statusText = getStatusText();
         statusLabel.setText(statusText);
@@ -150,6 +144,7 @@ class KanjiFaceView extends WatchUi.WatchFace {
             hrLabel.setText(hrSample.heartRate.toString());
         }
 
+        var seconds = clockTime.sec;
         if (seconds == 0 || now.compare(lastKanjiDisplay) > 15) {
             var kanjiText = View.findDrawableById("KanjiLabel") as Text;
             // release reference to previous font
@@ -168,7 +163,7 @@ class KanjiFaceView extends WatchUi.WatchFace {
 
         dc.setColor(Graphics.COLOR_PURPLE, Graphics.COLOR_BLACK);
         dc.setPenWidth(2);
-        dc.drawRoundedRectangle(66, 136, 76, 100, 7);
+        dc.drawRoundedRectangle(68, 136, 72, 100, 7);
     }
 
     // Called when this View is removed from the screen. Save the

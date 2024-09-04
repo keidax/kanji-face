@@ -1,5 +1,4 @@
 <layout id="WatchFace">
-    <!-- <drawable class="Background" /> -->
     <label id="DateLabel"
            x="center"
            y="3"
@@ -21,12 +20,10 @@
            justification="Graphics.TEXT_JUSTIFY_CENTER"
            color="Graphics.COLOR_RED" />
 
-    <label id="BatteryLabel"
-           x="146"
-           y="148"
-           font="Graphics.FONT_LARGE"
-           justification="Graphics.TEXT_JUSTIFY_LEFT"
-           color="Graphics.COLOR_GREEN" />
+    <drawable class="KanjiFaceBattery">
+      <param name="locX">145</param>
+      <param name="locY">151</param>
+    </drawable>
 
     <label id="KanjiLabel"
            x="center"
@@ -37,21 +34,21 @@
 
     <label id="StatusLabel"
            x="center"
-           y="92"
+           y="91"
            font="Graphics.FONT_SYSTEM_LARGE"
            justification="Graphics.TEXT_JUSTIFY_CENTER"
            color="Graphics.COLOR_WHITE" />
 
     <label id="StepsLabel"
-           x="146"
-           y="125"
+           x="145"
+           y="124"
            font="Graphics.FONT_SYSTEM_MEDIUM"
            justification="Graphics.TEXT_JUSTIFY_LEFT"
            color="Graphics.COLOR_BLUE" />
 
     <label id="HeartRateLabel"
            x="61"
-           y="125"
+           y="124"
            font="Graphics.FONT_SYSTEM_MEDIUM"
            justification="Graphics.TEXT_JUSTIFY_RIGHT"
            color="Graphics.COLOR_RED" />
