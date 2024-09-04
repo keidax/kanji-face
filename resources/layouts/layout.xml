@@ -13,12 +13,10 @@
            justification="Graphics.TEXT_JUSTIFY_CENTER"
            color="Graphics.COLOR_WHITE" />
 
-    <label id="MoveLabel"
-           x="48"
-           y="145"
-           font="Graphics.FONT_LARGE"
-           justification="Graphics.TEXT_JUSTIFY_CENTER"
-           color="Graphics.COLOR_RED" />
+    <drawable class="KanjiFaceMoveBar">
+      <param name="locX">34</param>
+      <param name="locY">151</param>
+    </drawable>
 
     <drawable class="KanjiFaceBattery">
       <param name="locX">145</param>

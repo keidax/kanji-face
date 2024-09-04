@@ -5,4 +5,9 @@
     <bitmap id="Battery60" filename="electric-60.png" />
     <bitmap id="Battery80" filename="electric-80.png" />
     <bitmap id="Battery100" filename="electric-100.png" />
+    <bitmap id="Move1" filename="move-1.png" />
+    <bitmap id="Move2" filename="move-2.png" />
+    <bitmap id="Move3" filename="move-3.png" />
+    <bitmap id="Move4" filename="move-4.png" />
+    <bitmap id="Move5" filename="move-5.png" />
 </drawables>

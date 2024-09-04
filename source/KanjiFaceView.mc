@@ -105,22 +105,6 @@ class KanjiFaceView extends WatchUi.WatchFace {
         view.setColor(getApp().getProperty("ForegroundColor") as Number);
         view.setText(timeString);
 
-        var activityInfo = ActivityMonitor.getInfo();
-        var moveBar = activityInfo.moveBarLevel;
-        var moveLabel = View.findDrawableById("MoveLabel") as Text;
-
-        if (false) {
-            moveLabel.setFont(Graphics.FONT_SYSTEM_LARGE);
-        } else {
-            moveLabel.setFont(statusFont);
-        }
-
-        if (moveBar > 0) {
-            moveLabel.setText(moveBar.toString());
-        } else {
-            moveLabel.setText("");
-        }
-
         var statusLabel = View.findDrawableById("StatusLabel") as Text;
         var statusText = getStatusText();
         statusLabel.setText(statusText);
@@ -130,6 +114,7 @@ class KanjiFaceView extends WatchUi.WatchFace {
             statusLabel.setFont(statusFont);
         }
 
+        var activityInfo = ActivityMonitor.getInfo();
         var stepsLabel = View.findDrawableById("StepsLabel") as Text;
         stepsLabel.setText(activityInfo.steps.toString());
 
