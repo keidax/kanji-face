@@ -19,6 +19,16 @@ class KanjiFaceView extends WatchUi.WatchFace {
     private var userSleepTime as Number;
     private var lastKanjiDisplay as Time.Moment;
     private var statusFont as FontResource?;
+    private var extraKanjiElements as Boolean;
+    private var firstUpdate as Boolean;
+
+    // Store label references so we don't have to keep calling findDrawableById
+    private var dateLabel as Text?;
+    private var timeLabel as Text?;
+    private var statusLabel as Text?;
+    private var stepsLabel as Text?;
+    private var heartRateLabel as Text?;
+    private var kanjiLabel as Text?;
 
     function initialize() {
         WatchFace.initialize();
@@ -27,12 +37,22 @@ class KanjiFaceView extends WatchUi.WatchFace {
         userWakeTime = 0;
         userSleepTime = 0;
         lastKanjiDisplay = new Time.Moment(0);
+        extraKanjiElements = true;
+        firstUpdate = true;
     }
 
     // Load your resources here
     function onLayout(dc as Dc) as Void {
-        setLayout(Rez.Layouts.WatchFace(dc));
         statusFont = WatchUi.loadResource(Rez.Fonts.Status);
+
+        setLayout(Rez.Layouts.WatchFace(dc));
+
+        dateLabel = View.findDrawableById("DateLabel") as Text;
+        timeLabel = View.findDrawableById("TimeLabel") as Text;
+        statusLabel = View.findDrawableById("StatusLabel") as Text;
+        stepsLabel = View.findDrawableById("StepsLabel") as Text;
+        heartRateLabel = View.findDrawableById("HeartRateLabel") as Text;
+        kanjiLabel = View.findDrawableById("KanjiLabel") as Text;
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -47,99 +67,32 @@ class KanjiFaceView extends WatchUi.WatchFace {
     // Update the view
     function onUpdate(dc as Dc) as Void {
         var now = Time.now();
-        var date = View.findDrawableById("DateLabel") as Text;
+        var timeInfo = Gregorian.info(now, Time.FORMAT_SHORT);
+        var fullUpdate = (timeInfo.sec == 0 || firstUpdate);
+        firstUpdate = false;
+        performUpdate(dc, now, timeInfo, fullUpdate);
+    }
 
-        if (false) {
-            var today = Gregorian.info(now, Time.FORMAT_MEDIUM);
-            var dateString = Lang.format("$1$ $2$", [today.day_of_week, today.day]);
-            date.setText(dateString);
-        } else {
-            date.setFont(statusFont);
-            var today = Gregorian.info(now, Time.FORMAT_SHORT);
-            var dateString = "";
-            switch (today.day_of_week) {
-                case 1:
-                    dateString += "g ";
-                    break;
-                case 2:
-                    dateString += "a ";
-                    break;
-                case 3:
-                    dateString += "b ";
-                    break;
-                case 4:
-                    dateString += "c ";
-                    break;
-                case 5:
-                    dateString += "d ";
-                    break;
-                case 6:
-                    dateString += "e ";
-                    break;
-                case 7:
-                    dateString += "f ";
-                    break;
-            }
-            dateString += japaneseNumerals(today.day);
-            date.setText(dateString);
+    private function performUpdate(dc as Dc, now as Time.Moment, timeInfo as Gregorian.Info, fullUpdate as Boolean) as Void {
+        updateStatusLabel(timeInfo);
+        updateStepsLabel();
+        updateHeartRateLabel();
+
+        if (fullUpdate) {
+            updateTimeLabel(timeInfo);
+            updateDateLabel(now);
         }
 
-        // Get the current time and format it correctly
-        var timeFormat = "$1$:$2$";
-        var clockTime = System.getClockTime();
-        var hours = clockTime.hour;
-        if (!System.getDeviceSettings().is24Hour) {
-            if (hours > 12) {
-                hours = hours - 12;
-            }
-        } else {
-            if (getApp().getProperty("UseMilitaryFormat")) {
-                timeFormat = "$1$$2$";
-                hours = hours.format("%02d");
-            }
-        }
-        var timeString = Lang.format(timeFormat, [hours, clockTime.min.format("%02d")]);
-
-        // Update the view
-        var view = View.findDrawableById("TimeLabel") as Text;
-        view.setColor(getApp().getProperty("ForegroundColor") as Number);
-        view.setText(timeString);
-
-        var statusLabel = View.findDrawableById("StatusLabel") as Text;
-        var statusText = getStatusText();
-        statusLabel.setText(statusText);
-        if (false) {
-            statusLabel.setFont(Graphics.FONT_SYSTEM_LARGE);
-        } else {
-            statusLabel.setFont(statusFont);
-        }
-
-        var activityInfo = ActivityMonitor.getInfo();
-        var stepsLabel = View.findDrawableById("StepsLabel") as Text;
-        stepsLabel.setText(activityInfo.steps.toString());
-
-        var hrLabel = View.findDrawableById("HeartRateLabel") as Text;
-
-        var hrIterator = ActivityMonitor.getHeartRateHistory(1, true);
-        var hrSample = hrIterator.next();
-
-        if (hrSample == null || hrSample.heartRate == ActivityMonitor.INVALID_HR_SAMPLE) {
-            hrLabel.setText("Ø");
-        } else {
-            hrLabel.setText(hrSample.heartRate.toString());
-        }
-
-        var seconds = clockTime.sec;
+        var seconds = timeInfo.sec;
         if (seconds == 0 || now.compare(lastKanjiDisplay) > 15) {
-            var kanjiText = View.findDrawableById("KanjiLabel") as Text;
             // release reference to previous font
-            kanjiText.setFont(Graphics.FONT_SYSTEM_LARGE);
+            kanjiLabel.setFont(Graphics.FONT_SYSTEM_LARGE);
 
             var kanjiRef = kanjiLoader.loadNextKanji();
             var codepoint = kanjiRef[0];
             var char = codepoint.toChar().toString();
-            kanjiText.setText(char);
-            kanjiText.setFont(kanjiRef[1]);
+            kanjiLabel.setText(char);
+            kanjiLabel.setFont(kanjiRef[1]);
             lastKanjiDisplay = now;
         }
 
@@ -167,8 +120,84 @@ class KanjiFaceView extends WatchUi.WatchFace {
         isSleeping = true;
     }
 
+    private function updateTimeLabel(timeInfo as Gregorian.Info) as Void {
+        // Get the current time and format it correctly
+        var hours = timeInfo.hour;
+        if (!System.getDeviceSettings().is24Hour) {
+            if (hours > 12) {
+                hours = hours - 12;
+            }
+        }
+        var mins = timeInfo.min.format("%02d");
+        var timeString = Lang.format("$1$:$2$", [hours, mins]);
+        timeLabel.setText(timeString);
+    }
+
+    private function updateDateLabel(now as Time.Moment) as Void {
+        if (extraKanjiElements) {
+            dateLabel.setFont(statusFont);
+            var today = Gregorian.info(now, Time.FORMAT_SHORT);
+            var dateString = "";
+            switch (today.day_of_week) {
+                case 1:
+                    dateString += "g ";
+                    break;
+                case 2:
+                    dateString += "a ";
+                    break;
+                case 3:
+                    dateString += "b ";
+                    break;
+                case 4:
+                    dateString += "c ";
+                    break;
+                case 5:
+                    dateString += "d ";
+                    break;
+                case 6:
+                    dateString += "e ";
+                    break;
+                case 7:
+                    dateString += "f ";
+                    break;
+            }
+            dateString += japaneseNumerals(today.day);
+            dateLabel.setText(dateString);
+        } else {
+            var today = Gregorian.info(now, Time.FORMAT_MEDIUM);
+            var dateString = Lang.format("$1$ $2$", [today.day_of_week, today.day]);
+            dateLabel.setText(dateString);
+        }
+    }
+
+    private function updateStatusLabel(timeInfo as Gregorian.Info) as Void {
+        var statusText = getStatusText(timeInfo);
+        statusLabel.setText(statusText);
+        if (extraKanjiElements) {
+            statusLabel.setFont(statusFont);
+        } else {
+            statusLabel.setFont(Graphics.FONT_SYSTEM_LARGE);
+        }
+    }
+
+    private function updateStepsLabel() as Void {
+        var activityInfo = ActivityMonitor.getInfo();
+        stepsLabel.setText(activityInfo.steps.toString());
+    }
+
+    private function updateHeartRateLabel() as Void {
+        var hrIterator = ActivityMonitor.getHeartRateHistory(1, true);
+        var hrSample = hrIterator.next();
+
+        if (hrSample == null || hrSample.heartRate == ActivityMonitor.INVALID_HR_SAMPLE) {
+            heartRateLabel.setText("Ø");
+        } else {
+            heartRateLabel.setText(hrSample.heartRate.toString());
+        }
+    }
+
     // Get some status information in a condensed form
-    function getStatusText() as String {
+    function getStatusText(timeInfo as Gregorian.Info) as String {
         var statusText = "";
 
         var settings = System.getDeviceSettings();
@@ -180,7 +209,7 @@ class KanjiFaceView extends WatchUi.WatchFace {
         } else {
             statusText += "D";
         }
-        if (isSleepMode()) {
+        if (isSleepMode(timeInfo)) {
             statusText += "Z";
         }
         if (isSleeping) {
@@ -193,13 +222,12 @@ class KanjiFaceView extends WatchUi.WatchFace {
     // Based on https://forums.garmin.com/developer/connect-iq/f/discussion/2416/do-not-disturb
     // We don't have access to the Do Not Disturb state, so we assume the user's configured
     // sleep/wake times are equivalent.
-    function isSleepMode() {
+    function isSleepMode(timeInfo as Gregorian.Info) as Boolean {
         var sleepMode = false;
         if (userWakeTime == userSleepTime) {
             return sleepMode;
         }
-        var nowT = System.getClockTime();
-        var now = nowT.hour*3600 + nowT.min*60 + nowT.sec;
+        var now = timeInfo.hour*3600 + timeInfo.min*60 + timeInfo.sec;
         if(userSleepTime > userWakeTime) {
             if(now >= userSleepTime || now <= userWakeTime) {
                 sleepMode = true;
@@ -235,5 +263,4 @@ class KanjiFaceView extends WatchUi.WatchFace {
 
         return string;
     }
-
 }

@@ -13,9 +13,7 @@ class KanjiFaceBattery extends WatchUi.Drawable {
     }
 
     function draw(dc as Dc) as Void {
-        if (System.getClockTime().sec == 0) {
-            checkBatteryLevel();
-        }
+        checkBatteryLevel();
         dc.drawBitmap(self.locX, self.locY, batteryBitmap);
     }
 
