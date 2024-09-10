@@ -2,6 +2,8 @@
 
 A Garmin Connect IQ watch face designed for kanji review
 
+![screenshot](./screenshot.png)
+
 ## Overview
 
 This watch face assists with learning [Japanese kanji][kanji].
