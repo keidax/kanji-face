@@ -42,7 +42,7 @@
            y="124"
            font="Graphics.FONT_SYSTEM_MEDIUM"
            justification="Graphics.TEXT_JUSTIFY_LEFT"
-           color="Graphics.COLOR_BLUE" />
+           color="Graphics.COLOR_YELLOW" />
 
     <label id="HeartRateLabel"
            x="61"

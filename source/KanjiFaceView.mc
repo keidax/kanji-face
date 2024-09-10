@@ -183,6 +183,11 @@ class KanjiFaceView extends WatchUi.WatchFace {
     private function updateStepsLabel() as Void {
         var activityInfo = ActivityMonitor.getInfo();
         stepsLabel.setText(activityInfo.steps.toString());
+        if (activityInfo.steps >= activityInfo.stepGoal) {
+            stepsLabel.setColor(Graphics.COLOR_BLUE);
+        } else {
+            stepsLabel.setColor(Graphics.COLOR_YELLOW);
+        }
     }
 
     private function updateHeartRateLabel() as Void {
