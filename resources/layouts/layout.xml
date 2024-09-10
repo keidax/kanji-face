@@ -14,13 +14,13 @@
            color="Graphics.COLOR_WHITE" />
 
     <drawable class="KanjiFaceMoveBar">
-      <param name="locX">34</param>
-      <param name="locY">151</param>
+      <param name="locX">32</param>
+      <param name="locY">142</param>
     </drawable>
 
     <drawable class="KanjiFaceBattery">
-      <param name="locX">145</param>
-      <param name="locY">151</param>
+      <param name="locX">147</param>
+      <param name="locY">142</param>
     </drawable>
 
     <label id="KanjiLabel"
@@ -38,16 +38,16 @@
            color="Graphics.COLOR_WHITE" />
 
     <label id="StepsLabel"
-           x="145"
-           y="124"
+           x="180"
+           y="99"
            font="Graphics.FONT_SYSTEM_MEDIUM"
-           justification="Graphics.TEXT_JUSTIFY_LEFT"
+           justification="Graphics.TEXT_JUSTIFY_CENTER"
            color="Graphics.COLOR_YELLOW" />
 
     <label id="HeartRateLabel"
-           x="61"
-           y="124"
+           x="27"
+           y="99"
            font="Graphics.FONT_SYSTEM_MEDIUM"
-           justification="Graphics.TEXT_JUSTIFY_RIGHT"
+           justification="Graphics.TEXT_JUSTIFY_CENTER"
            color="Graphics.COLOR_RED" />
 </layout>
