@@ -83,17 +83,15 @@ class KanjiFaceView extends WatchUi.WatchFace {
             updateDateLabel(now);
         }
 
-        var seconds = timeInfo.sec;
-        if (seconds == 0 || now.compare(lastKanjiDisplay) > 15) {
-            // release reference to previous font
-            kanjiLabel.setFont(Graphics.FONT_SYSTEM_LARGE);
+        // TODO: extract this to a real option
+        var changeEveryMinute = false;
 
-            var kanjiRef = kanjiLoader.loadNextKanji();
-            var codepoint = kanjiRef[0];
-            var char = codepoint.toChar().toString();
-            kanjiLabel.setText(char);
-            kanjiLabel.setFont(kanjiRef[1]);
-            lastKanjiDisplay = now;
+        if (changeEveryMinute) {
+            if (fullUpdate) {
+                changeKanji(now);
+            }
+        } else if (now.compare(lastKanjiDisplay) >= 30) {
+            changeKanji(now);
         }
 
         // Call the parent onUpdate function to redraw the layout
@@ -102,6 +100,19 @@ class KanjiFaceView extends WatchUi.WatchFace {
         dc.setColor(Graphics.COLOR_PURPLE, Graphics.COLOR_BLACK);
         dc.setPenWidth(2);
         dc.drawRoundedRectangle(68, 136, 72, 100, 7);
+    }
+
+    // Change the displayed kanji/kana
+    private function changeKanji(now as Time.Moment) as Void {
+        // Release reference to previous font
+        kanjiLabel.setFont(Graphics.FONT_SYSTEM_LARGE);
+
+        var kanjiRef = kanjiLoader.loadNextKanji();
+        var codepoint = kanjiRef[0];
+        var char = codepoint.toChar().toString();
+        kanjiLabel.setText(char);
+        kanjiLabel.setFont(kanjiRef[1]);
+        lastKanjiDisplay = now;
     }
 
     // Called when this View is removed from the screen. Save the
