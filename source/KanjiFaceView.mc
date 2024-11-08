@@ -97,7 +97,8 @@ class KanjiFaceView extends WatchUi.WatchFace {
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
 
-        dc.setColor(Graphics.COLOR_PURPLE, Graphics.COLOR_BLACK);
+        var accentColor = getApp().getProperty("AccentColor");
+        dc.setColor(accentColor, Graphics.COLOR_BLACK);
         dc.setPenWidth(2);
         dc.drawRoundedRectangle(68, 136, 72, 100, 7);
     }
