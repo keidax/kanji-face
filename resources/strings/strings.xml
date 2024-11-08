@@ -5,6 +5,7 @@
     <string id="BackgroundColorTitle">Background Color</string>
     <string id="AccentColorTitle">Accent Color</string>
     <string id="MilitaryFormatTitle">Military Format for 24 Hour Time</string>
+    <string id="KanjiDurationTitle">Kanji Duration</string>
 
     <string id="ColorBlack">Black</string>
     <string id="ColorDarkGray">Dark Gray</string>
@@ -17,4 +18,6 @@
     <string id="ColorBlue">Blue</string>
     <string id="ColorPurple">Purple</string>
 
+    <string id="Duration60">60 seconds</string>
+    <string id="Duration30">30 seconds (⚠️ experimental!)</string>
 </strings>

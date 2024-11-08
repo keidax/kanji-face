@@ -22,6 +22,13 @@
         </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.KanjiDuration" title="@Strings.KanjiDurationTitle">
+        <settingConfig type="list">
+            <listEntry value="60">@Strings.Duration60</listEntry>
+            <listEntry value="30">@Strings.Duration30</listEntry>
+        </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.UseMilitaryFormat" title="@Strings.MilitaryFormatTitle">
         <settingConfig type="boolean" />
     </setting>

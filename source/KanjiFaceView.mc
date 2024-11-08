@@ -83,10 +83,12 @@ class KanjiFaceView extends WatchUi.WatchFace {
             updateDateLabel(now);
         }
 
-        // TODO: extract this to a real option
-        var changeEveryMinute = false;
-
-        if (changeEveryMinute) {
+        // kanjiDuration may be 60 seconds or 30 seconds. The shorter duration
+        // takes advantage of watch faces in low power mode redrawing several
+        // times per minute, which appears to be undocumented behavior. So far
+        // I've only confirmed this works on the Forerunner 45.
+        var kanjiDuration = getApp().getProperty("KanjiDuration");
+        if (kanjiDuration == 60) {
             if (fullUpdate) {
                 changeKanji(now);
             }
